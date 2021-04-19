@@ -1,0 +1,12 @@
+[submodule "todo-app"]
+	path = todo-app
+	url = https://github.com/vriesm060/todo-app.git
+[submodule "news-app"]
+	path = news-app
+	url = https://github.com/vriesm060/news-app.git
+[submodule "home-listing-app"]
+	path = home-listing-app
+	url = https://github.com/vriesm060/home-listing-app.git
+[submodule "authentication-system-app"]
+	path = authentication-system-app
+	url = https://github.com/vriesm060/authentication-system-app.git

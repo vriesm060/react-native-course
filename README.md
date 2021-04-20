@@ -1,7 +1,7 @@
-# react-native-course
+# React Native Course
 Following a React Native course from Udemy
 
-## Apps:
+## Apps
 * [TODO App](https://github.com/vriesm060/todo-app)
 
 ## Differences between Expo CLI and React Native CLI
@@ -20,3 +20,23 @@ You can switch between the two at any time.
 
 Android Emulator for both Mac and Windows.
 iOS Simulator only for Mac.
+
+In React Native you style your components using JS.
+You therefore use camelCase instead of hyphens.
+
+## Features
+
+### State
+You use state to store values that can change in a component.
+
+### React Hooks
+For functional components.
+
+`const [todoItem, setTodoItem] = useState('');`
+
+Declare a state with a variable (todoItem) and a function (setTodoItem) that takes a default value ('').
+
+### Spread operator
+Generates a copy of the existing variable.
+
+`...todoList`

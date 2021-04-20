@@ -17,3 +17,6 @@ You can switch between the two at any time.
 ## Setup
 
 `expo init my-app-name`
+
+Android Emulator for both Mac and Windows.
+iOS Simulator only for Mac.

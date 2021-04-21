@@ -41,3 +41,50 @@ Declare a state with a variable (todoItem) and a function (setTodoItem) that tak
 Generates a copy of the existing variable.
 
 `...todoList`
+
+## Styling in React Native
+
+Styling is done using flexbox.
+A big difference from the web is the axis working with flexbox. The main axis in React Native is the y-axis, and the cross axis is the x-axis. Opposite of the web.
+
+So, in React Native, applying `justifyContent: center` means the flex items will be centered vertically, along the main (y) axis, as opposed to the web.
+
+### Platform specific styles
+`backgroundColor: Platform.OS === 'ios' ? '#72bcd4' : '#fff',`
+
+### Images in React Native
+`<Image source={require('../../assets/news.jpeg')} />`
+Using require. Locally.
+From the web:
+`source={{uri: 'https://www.conchovalleyhomepage.com/wp-content/uploads/sites/83/2020/05/BREAKING-NEWS-GENERIC-1.jpg?w=1920&h=1080&crop=1'}}`
+
+### Fonts in React Native
+Install expo-font and import it as follows: `import * as Font from 'expo-font';`.
+
+Loading the local fonts you want to use using the following function:
+```
+const loadFonts = () => {
+  return Font.loadAsync({
+    'Bree Serif': require('./assets/fonts/breeserif_regular.otf'),
+  });
+}
+```
+
+Since loading the fonts is an async function, the app has to wait untill the fonts are done loading before we show the components.
+To do this, we make use of a splashscreen component from Expo and remove this component when the loading is done.
+
+```
+const [fontLoaded, setFontLoaded] = useState(false);
+
+if (!fontLoaded) {
+  return (
+    <AppLoading
+      startAsync={loadFonts}
+      onFinish={() => setFontLoaded(true)}
+    />
+  );
+}
+```
+
+### Icons in React Native
+Import icons from expo library: `import { MaterialIcons } from '@expo/vector-icons';`.

@@ -88,3 +88,81 @@ if (!fontLoaded) {
 
 ### Icons in React Native
 Import icons from expo library: `import { MaterialIcons } from '@expo/vector-icons';`.
+
+## Navigation in React Native
+Use React Navigation package.
+
+Three types of navigation:
+
+* **Stack navigation**
+  Move from one page to the other by stacking screens ontop of each other.
+* **Tabs navigation**
+  Move to different screens as tabs.
+* **Drawer navigation**
+  Create a hamburger menu with drawers.
+
+### Stack Navigator
+```
+const Stack = createStackNavigator();
+
+function AppNavigator() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+Create a stack navigator tree using createStackNavigator function.
+
+`<Stack.Screen name="NewsList" component={NewsListScreen} />`
+
+Setup a screen as part of a stack navigator.
+Name is relevant for moving between one screen to another.
+
+Using React Navigation will give screens a navigation prop, which has methods like goBack and navigate.
+
+Navigate will automatically give a back button.
+
+**Moving between screens like this:**
+`props.navigation.navigate('NewsDetails')`
+
+### Tabs navigation
+
+```
+<Tabs.Navigator>
+  <Tabs.Screen name="Home" component={HomeNavigator} />
+  <Tabs.Screen name="Favorites" component={FavoritesNavigator} />
+</Tabs.Navigator>
+```
+
+You can use tab navigation to navigate between different stacks, which can contain screens.
+
+### Drawer navigation
+
+```
+<Drawer.Navigator>
+  <Drawer.Screen name="News" component={TabsNavigator} />
+  <Drawer.Screen name="About" component={AboutScreen} />
+</Drawer.Navigator>
+```
+
+Creates a drawer coming in by default from the left of the screen when dragging from left to right.
+
+**Add a hamburger menu:**
+
+Import useNavigation component which will give access to the navigation props.
+This way we can create a hamburger menu to open up the drawer.
+
+```
+const HeaderLeft = () => {
+  const navigation = useNavigation();
+
+  return (
+    <MaterialIcons name="menu" size={24} onPress={() => navigation.openDrawer()} />
+  );
+}
+```

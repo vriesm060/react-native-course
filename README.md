@@ -252,3 +252,57 @@ useEffect(() => {
 
 And use the data from the store:
 `const articles = useSelector(state => state.news.articles);`
+
+---
+
+## Building web server using express and MongoDB
+
+### Setup MongoDB with schema
+
+**Schema:**
+```
+const mongoose = require('mongoose');
+
+const HouseSchema = new mongoose.Schema({
+  title:        { type: String, required: true },
+  address:      { type: String, required: true },
+  homeType:     { type: String },
+  description:  { type: String },
+  price:        { type: Number, required: true },
+  image:        { type: String },
+  yearBuilt:    { type: Number },
+});
+
+module.exports = mongoose.model('House', HouseSchema);
+```
+
+**Routing:**
+```
+const express = require('express');
+const House = require('../models/House');
+
+const router = express.Router();
+
+router.post('/', (req, res) => {
+  const house = new House({
+    title: req.body.title,
+    address: req.body.address,
+    homeType: req.body.homeType,
+    description: req.body.description,
+    price: req.body.price,
+    image: req.body.image,
+    yearBuilt: req.body.yearBuilt,
+  });
+
+  house.save()
+    .then(result => {
+      res.send({
+        message: 'House data created successfully',
+        data: result
+      });
+    })
+    .catch(err => console.log(err));
+});
+
+module.exports = router;
+```

@@ -4,6 +4,7 @@ Following a React Native course from Udemy
 ## Apps
 * [TODO App](https://github.com/vriesm060/todo-app)
 * [News App](https://github.com/vriesm060/news-app)
+* [Home Listing App](https://github.com/vriesm060/home-listing-app)
 
 ## Differences between Expo CLI and React Native CLI
 

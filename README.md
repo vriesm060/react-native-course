@@ -306,3 +306,23 @@ router.post('/', (req, res) => {
 
 module.exports = router;
 ```
+
+**Validation:**
+```
+router.post('/', [
+  check('title')
+    .isLength({ min: 3, max: 50 })
+    .withMessage('Title should be between 3 and 50 characters.');
+], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(422).send({ errors: errors.array() });
+
+  ...
+});
+```
+
+---
+
+## Combining React Native frontend with Node JS Backend
+
+I setup a React Native app for the home listing App using the React Native features I've learned in previous sections. Setting it up with a stack and tab navigation. 

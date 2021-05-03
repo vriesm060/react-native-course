@@ -325,4 +325,126 @@ router.post('/', [
 
 ## Combining React Native frontend with Node JS Backend
 
-I setup a React Native app for the home listing App using the React Native features I've learned in previous sections. Setting it up with a stack and tab navigation. 
+I setup a React Native app for the home listing App using the React Native features I've learned in previous sections. Setting it up with a stack and tab navigation.
+
+### Connect React Native to the server
+
+Fetch the data from the server in an action and pass this data through the reducer to the components that will take it in.
+
+```
+export const fetchHouses = () => {
+  return async dispatch => {
+
+    const result = await fetch('http://localhost:3000/api/houses');
+    const resultData = await result.json();
+
+    dispatch({
+      type: FETCH_HOUSES,
+      payload: resultData,
+    });
+  }
+}
+```
+
+### Add a form to post data to the server
+
+React Native form is build using Formik.
+
+```
+<Formik
+  initialValues={{
+    title: '',
+    image: '',
+    homeType: '',
+    price: '',
+    yearBuilt: '',
+    address: '',
+    description: '',
+  }}
+  validationSchema={formSchema}
+  onSubmit={(values) => {
+    dispatch(houseAction.createHome(values))
+      .then(() => {
+        Alert.alert('Created successfully');
+      })
+      .catch(() => {
+        Alert.alert('An error occurred. Please try again.');
+      });
+  }}
+>
+  {(props) => (
+    <View style={styles.form}>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Title</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={props.handleChange('title')}
+          onBlur={props.handleBlur('title')}
+          value={props.values.title}
+        />
+        <Text style={styles.error}>{ props.touched.title && props.errors.title }</Text>
+      </View>
+
+      ...
+
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Add Home"
+          onPress={props.handleSubmit}
+        />
+      </View>
+    </View>
+  )}
+</Formik>
+```
+
+### Add validation to form in react native
+
+We use Yup to validate the React Native form.
+
+Define a schema for the validation.
+```
+const formSchema = yup.object({
+  title: yup.string().required().min(3).max(50),
+  price: yup.number().required(),
+  yearBuilt: yup.number().required(),
+  image: yup.string().required(),
+  address: yup.string().required(),
+  description: yup.string().required(),
+});
+```
+
+### Add post request to the server
+
+Post the form data to the server using fetch. We do this in the action.
+
+```
+export const createHome = ({ title, image, homeType, price, yearBuilt, address, description }) => {
+  return async dispatch => {
+    const response = await fetch('http://localhost:3000/api/houses', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        image,
+        homeType,
+        price,
+        yearBuilt,
+        address,
+        description,
+      })
+    });
+
+    const responseData = await response.json();
+
+    dispatch({
+      type: CREATE_HOUSES,
+      payload: responseData,
+    });
+  }
+}
+```
+
+This action is passed through the reducer and back to the components.

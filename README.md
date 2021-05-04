@@ -448,3 +448,92 @@ export const createHome = ({ title, image, homeType, price, yearBuilt, address, 
 ```
 
 This action is passed through the reducer and back to the components.
+
+---
+
+## Authentication system
+
+### The setup
+A client (App) sends a request with authentication to the server. In response it gets a token. This token is stored on the client side and gets send to the server on subsequent requests whenever the client wants to make a request to the server. 
+
+This is the authentication system we will build.
+
+### Building the user register request
+```
+router.post('/register', async (req, res) => {
+  const user = new User({
+    fullName: req.body.fullName,
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  try {
+    const savedUser = await user.save();
+    res.send(savedUser);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+```
+
+We add validation and secure the password in the database by hashing it.
+For the hashing we use the bcryptjs package.
+
+**Hashing password:**
+```
+// Hash the password:
+const salt = await bcrypt.genSalt();
+const hashPassword = await bcrypt.hash(req.body.password, salt);
+```
+
+**Check if email already exists:**
+```
+const userExists = await User.findOne({ email: req.body.email });
+if (userExists) return res.status(400).send('Email already exists.');
+```
+
+### Building the login request
+```
+router.post('/login', loginValidate, async (req, res) => {
+  // Validate form:
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+
+  // Check if email exists:
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(404).send('Invalid email or password');
+
+  // Check if password is correct:
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword) return res.status(404).send('Invalid email or or password');
+
+  res.send('logged in');
+});
+```
+
+### Setting up JSON web tokens
+Using the jsonwebtoken package we can create a web token, like:
+
+```
+const token = jwt.sign({ _id: user._id, email: user.email }, secret);
+res.header('auth-token', token).send({ message: 'Logged in successfully!', token });
+```
+
+### Protecting a route
+To protect a route, we use a middleware to verify the token that we get back from our authentication request.
+
+```
+module.exports = function (req, res, next) {
+  const token = req.header('auth-token');
+  if (!token) return res.status(401).send('Access denied.');
+
+  // Verify the token:
+  try {
+    const verified = jwt.verify(token, secret);
+    req.user = verified;
+    next();
+  } catch (err) {
+    res.status(400).send('Invalid token.');
+  }
+}
+```

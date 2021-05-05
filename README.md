@@ -537,3 +537,6 @@ module.exports = function (req, res, next) {
   }
 }
 ```
+
+### React Native frontend for authentication app
+Using the secureTextEntry property for TextInput, we can secure the password input.

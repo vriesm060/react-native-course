@@ -540,3 +540,84 @@ module.exports = function (req, res, next) {
 
 ### React Native frontend for authentication app
 Using the secureTextEntry property for TextInput, we can secure the password input.
+
+### Register a user using React Native and NodeJS
+
+When we fill in a register form with a full name, email and password and submit this, a redux action dispatches the user data we submitted to the NodeJS backend.
+
+**Form submit handler:**
+```
+onSubmit={(values) => {
+  dispatch(authAction.registerUser(values))
+    .then(() => {
+      navProps.navigation.navigate('Home');
+    })
+    .catch(err => console.log(err));
+}}
+```
+
+On the backend we generate a unique token and send it back to the frontend along with the user details and a success boolean. The user is also saved in the database with an hashed password, for security reasons.
+
+Logging in uses the same approach, only without needing the full name.
+
+**Backend register handler**
+```
+try {
+  const savedUser = await user.save();
+  const token = generateToken(user);
+  res.send({
+    success: true,
+    data: {
+      id: savedUser._id,
+      fullName: savedUser.fullName,
+      email: savedUser.email,
+    },
+    token,
+  });
+} catch (err) {
+  res.status(400).send({
+    success: false,
+    err,
+  });
+}
+```
+
+### Storing tokens using AsyncStorage
+
+When a user has already registered, we can use the generated token to login the existing user. For this to work, we need to store the token in the React Native frontend. We do this using Async Storage
+
+In the login and register screens, when we submit the form and dispatch the data from the backend, we can store the token using Async Storage. Since this is an async function, we add the `async` keyword before the function that uses the resultData, like:
+
+```
+dispatch(authAction.loginUser(values))
+  .then(async (result) => {
+    if (result.success) {
+      try {
+        await AsyncStorage.setItem('token', result.token);
+        navProps.navigation.navigate('Home');
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      Alert.alert(result.message);
+    }
+  })
+  .catch(err => console.log(err));
+```
+
+In the homescreen we can then get the token back from the storage:
+```
+const loadProfile = async () => {
+  const token = await AsyncStorage.getItem('token');
+  if (!token) props.navigation.navigate('LoginScreen');
+}
+
+useEffect(() => {
+  loadProfile();
+});
+```
+
+### Decoding tokens
+We can decode the user tokens using a package called JWT Decode.
+
+`const decoded = jwtDecode(token);`

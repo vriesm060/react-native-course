@@ -621,3 +621,23 @@ useEffect(() => {
 We can decode the user tokens using a package called JWT Decode.
 
 `const decoded = jwtDecode(token);`
+
+---
+
+## Deploying React Native Apps
+
+1. Update the `app.json` file with the right information. Like name, icon, platforms, splashscreen, etc.
+2. Publish the app using the command `expo publish`. This will publish the app to Expo. You need an Expo account for this.
+3. Build the app:
+  * **iOS:** Run the command `expo build:ios`
+  * **Android:** Run the command `expo build:android`
+
+### For iOS
+If you want to build an app for iOS, you need a paid Developer account. To build, just run the command `expo build:ios`, and this should take you through the process.
+
+### For Android
+Building an app for Android using the command `expo build:android`, you can specify if you want to build an APK (`expo build:android -t apk`) or an App Bundle file (`expo build:android -t app-bundle`). APKs are generally used for testing internally and externally. If you really want to publish your app in the Google Play Store, build an App Bundle.
+
+For updating an app, you need to apply a keystore, which you can generate using Expo.
+
+For more detailed documentation on deploying React Native Apps using Expo, click [here](https://docs.expo.io/distribution/building-standalone-apps/).

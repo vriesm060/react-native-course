@@ -1,24 +1,76 @@
 # React Native Course
-Following a React Native course from Udemy
-
-## Apps
-* [TODO App](https://github.com/vriesm060/todo-app)
-* [News App](https://github.com/vriesm060/news-app)
-* [Home Listing App](https://github.com/vriesm060/home-listing-app)
-
-## Differences between Expo CLI and React Native CLI
-
-| Expo CLI                                         | React Native CLI                                                 |
-| ------------------------------------------------ | ---------------------------------------------------------------- |
-| Managed workflow                                 | Manually install and configure some dependencies                 |
-| Same installation steps on Mac, Windows or Linux | The instructions are different depending on the operating system |
-| Limited to the Expo ecosystem                    | Full flexibility                                                 |
-
-You can switch between the two at any time.
+*Following a React Native course from Udemy.*
 
 ---
 
-## Setup
+# Apps
+
+[1.0]: https://github.com/vriesm060/todo-app
+[2.0]: https://github.com/vriesm060/news-app
+[3.0]: https://github.com/vriesm060/home-listing-app
+[3.1]: https://github.com/vriesm060/home-listing-app-client
+[3.2]: https://github.com/vriesm060/home-listing-app/tree/master/server
+[4.0]: https://github.com/vriesm060/authentication-system-app
+[4.1]: https://github.com/vriesm060/authentication-system-app-client
+[4.2]: https://github.com/vriesm060/authentication-system-app/tree/master/server
+
+| [Todo App][1.0] | [News App][2.0] | [Home Listing App][3.0] | [Authentication System App][4.0] |
+| :-------------- | :-------------- | :---------------------- | :------------------------------- |
+| [Client][1.0]   | [Client][2.0]   | [Client][3.1]           | [Client][4.1]                    |
+|                 |                 | [Server][3.2]           | [Server][4.2]                    |
+
+---
+
+# Table of contents
+* **[Differences between Expo CLI and React Native CLI](#differences-between-expo-cli-and-react-native-cli)**
+* **[Setup](#setup)**
+* **[Features](#features)**
+  * [State](#state)
+  * [React Hooks](#react-hooks)
+  * [Spread operator](#spread-operator)
+* **[Styling in React Native](#styling-in-react-native)**
+  * [Platform specific styles](#platform-specific-styles)
+  * [Images in React Native](#images-in-react-native)
+  * [Fonts in React Native](#font-in-react-native)
+  * [Icons in React Native](#icons-in-react-native)
+* **[Navigation in React Native](#navigation-in-react-native)**
+  * [Tabs navigation](#tabs-navigation)
+  * [Drawer navigation](#drawer-navigation)
+* **[State management with Redux](#state-management-with-redux)**
+  * [Setting up Reducers](#setting-up-reducers)
+  * [Redux Actions](#redux-actions)
+  * [Use Redux in Components](#use-redux-in-components)
+* **[Building web server using Express and MongoDB](#building-web-server-using-express-and-mongodb)**
+  * [Setup MongoDB with schema](#setup-mongodb-with-schema)
+* **[Combining React Native frontend with NodeJS backend](#combining-react-native-frontend-with-nodejs-backend)**
+  * [Connect React Native to the server](#connect-react-native-to-the-server)
+  * [Add a form to post data to the server](#add-a-form-to-post-data-to-the-server)
+  * [Add validation to form in React Native](#add-validation-to-form-in-react-native)
+  * [Add post request to the server](#add-post-request-to-the-server)
+* **[Authentication system](#authentication-system)**
+  * [The setup](#the-setup)
+  * [Building the user register request](#building-the-user-register-request)
+  * [Building the login request](#building-the-login-request)
+  * [Setting up JSON Web Tokens](#setting-up-json-web-tokens)
+  * [Protecting a route](#protecting-a-route)
+  * [React Native frontend for Authentication App](#react-native-frontend-for-authentication-app)
+  * [Register a user using React Native and NodeJS](#register-a-user-using-react-native-and-nodejs)
+  * [Storing tokens using AsyncStorage](#storing-tokens-using-asyncstorage)
+  * [Decoding tokens](#decoding-tokens)
+* **[Deploying React Native Apps](#deploying-react-native-apps)**
+  * [For iOS](#for-ios)
+  * [For Android](#for-android)
+
+---
+
+
+
+
+
+
+
+
+# Setup
 
 `expo init my-app-name`
 
@@ -30,7 +82,19 @@ You therefore use camelCase instead of hyphens.
 
 ---
 
-## Features
+# Differences between Expo CLI and React Native CLI
+
+| Expo CLI                                         | React Native CLI                                                 |
+| :----------------------------------------------- | :--------------------------------------------------------------- |
+| Managed workflow                                 | Manually install and configure some dependencies                 |
+| Same installation steps on Mac, Windows or Linux | The instructions are different depending on the operating system |
+| Limited to the Expo ecosystem                    | Full flexibility                                                 |
+
+*You can switch between the two at any time.*
+
+---
+
+# Features
 
 ### State
 You use state to store values that can change in a component.
@@ -49,7 +113,7 @@ Generates a copy of the existing variable.
 
 ---
 
-## Styling in React Native
+# Styling in React Native
 
 Styling is done using flexbox.
 A big difference from the web is the axis working with flexbox. The main axis in React Native is the y-axis, and the cross axis is the x-axis. Opposite of the web.
@@ -98,7 +162,7 @@ Import icons from expo library: `import { MaterialIcons } from '@expo/vector-ico
 
 ---
 
-## Navigation in React Native
+# Navigation in React Native
 Use React Navigation package.
 
 Three types of navigation:
@@ -178,7 +242,7 @@ const HeaderLeft = () => {
 
 ---
 
-## State management with Redux
+# State management with Redux
 
 Redux makes it easy to manage the state (data) of an application. With Redux, the state is kept in a central **store**, accessibe to every component that needs to use it.
 
@@ -255,7 +319,7 @@ And use the data from the store:
 
 ---
 
-## Building web server using express and MongoDB
+# Building web server using express and MongoDB
 
 ### Setup MongoDB with schema
 
@@ -323,7 +387,7 @@ router.post('/', [
 
 ---
 
-## Combining React Native frontend with Node JS Backend
+# Combining React Native frontend with NodeJS Backend
 
 I setup a React Native app for the home listing App using the React Native features I've learned in previous sections. Setting it up with a stack and tab navigation.
 
@@ -451,7 +515,7 @@ This action is passed through the reducer and back to the components.
 
 ---
 
-## Authentication system
+# Authentication system
 
 ### The setup
 A client (App) sends a request with authentication to the server. In response it gets a token. This token is stored on the client side and gets send to the server on subsequent requests whenever the client wants to make a request to the server. 
@@ -624,13 +688,13 @@ We can decode the user tokens using a package called JWT Decode.
 
 ---
 
-## Deploying React Native Apps
+# Deploying React Native Apps
 
 1. Update the `app.json` file with the right information. Like name, icon, platforms, splashscreen, etc.
 2. Publish the app using the command `expo publish`. This will publish the app to Expo. You need an Expo account for this.
 3. Build the app:
-  * **iOS:** Run the command `expo build:ios`
-  * **Android:** Run the command `expo build:android`
+    * **iOS:** Run the command `expo build:ios`
+    * **Android:** Run the command `expo build:android`
 
 ### For iOS
 If you want to build an app for iOS, you need a paid Developer account. To build, just run the command `expo build:ios`, and this should take you through the process.

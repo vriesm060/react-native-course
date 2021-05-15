@@ -3,7 +3,8 @@
 
 ---
 
-# Apps
+# Apps :iphone:
+*Click on any of the links to go to the project repositories.*
 
 [1.0]: https://github.com/vriesm060/todo-app
 [2.0]: https://github.com/vriesm060/news-app
@@ -21,9 +22,9 @@
 
 ---
 
-# Table of contents
-* **[Differences between Expo CLI and React Native CLI](#differences-between-expo-cli-and-react-native-cli)**
+# Table of contents :page_facing_up:
 * **[Setup](#setup)**
+  * [Expo init](#expo-init)
 * **[Features](#features)**
   * [State](#state)
   * [React Hooks](#react-hooks)
@@ -63,27 +64,10 @@
 
 ---
 
+# Setup :floppy_disk:
+In order to run React Native on your computer, you can either use the **React Native CLI** or the **Expo CLI**. For this course I'm using Expo, since it is easier to start out with. The React Native CLI is better for more experienced React Native developers. Both CLIs have pros and cons.
 
-
-
-
-
-
-
-# Setup
-
-`expo init my-app-name`
-
-Android Emulator for both Mac and Windows.
-iOS Simulator only for Mac.
-
-In React Native you style your components using JS.
-You therefore use camelCase instead of hyphens.
-
----
-
-# Differences between Expo CLI and React Native CLI
-
+**Differences between Expo CLI and React Native CLI**
 | Expo CLI                                         | React Native CLI                                                 |
 | :----------------------------------------------- | :--------------------------------------------------------------- |
 | Managed workflow                                 | Manually install and configure some dependencies                 |
@@ -92,21 +76,33 @@ You therefore use camelCase instead of hyphens.
 
 *You can switch between the two at any time.*
 
+## Expo init
+Once you have installed the **Expo CLI**, creating a new project is as simple as running the command `expo init my-app-name`.
+You will be taken through some initializing steps after which your Expo project gets installed.
+
+In order to test and run applications, you'll need an **Android Emulator**, which you can install from the [Android Studio](https://developer.android.com/studio) and/or the **iOS Simulator**, which you can install using [Xcode](https://developer.apple.com/xcode/).
+
+>Android Emulator can be used on both Windows and Mac, iOS Simulator only on a Mac.
+
+You can run your Expo project using the command `expo start`. This will bring up the React Native Dev Tools in a browser window. In here you can run your app on either the Android Emulator or iOS Simulator. This can also be done by pressing `a` or `i` in the terminal respectively.
+
 ---
 
 # Features
 
-### State
-You use state to store values that can change in a component.
+## State
+In React Native, just like in React JS, you use state in a component to store values that can change over time.
 
-### React Hooks
-For functional components.
+## React Hooks
+When you use functional components in React JS or React Native, you can use React Hooks in place of constructor and functions like componentDidMount, which are used in class based components.
+
+Declaring a state variable using React Hooks is done like this:
 
 `const [todoItem, setTodoItem] = useState('');`
 
-Declare a state with a variable (todoItem) and a function (setTodoItem) that takes a default value ('').
+*Declare a state with a variable (todoItem) and a function (setTodoItem) that takes a default value ('').*
 
-### Spread operator
+## Spread operator
 Generates a copy of the existing variable.
 
 `...todoList`
@@ -114,25 +110,31 @@ Generates a copy of the existing variable.
 ---
 
 # Styling in React Native
-
-Styling is done using flexbox.
-A big difference from the web is the axis working with flexbox. The main axis in React Native is the y-axis, and the cross axis is the x-axis. Opposite of the web.
+In React Native you style your components using JavaScript. You therefore use **camelCase** instead of hyphens. Styling is done using flexbox. A big difference from the web is the axis working with flexbox. The main axis in React Native is the y-axis, and the cross axis is the x-axis. Opposite of using flexbox for the web.
 
 So, in React Native, applying `justifyContent: center` means the flex items will be centered vertically, along the main (y) axis, as opposed to the web.
 
-### Platform specific styles
+## Platform specific styles
+Both iOS and Android have their own way of styling components. Often you want to style components the same way for both platforms, but if you want to apply a specific style, you can: 
+
 `backgroundColor: Platform.OS === 'ios' ? '#72bcd4' : '#fff',`
 
-### Images in React Native
+## Images in React Native
+The core component `<Image />` has two ways of requiring a source, locally and from the web.
+
+**Requiring a local source:**
+
 `<Image source={require('../../assets/news.jpeg')} />`
-Using require. Locally.
-From the web:
+
+**Requiring a source from the web:**
+
 `source={{uri: 'https://www.conchovalleyhomepage.com/wp-content/uploads/sites/83/2020/05/BREAKING-NEWS-GENERIC-1.jpg?w=1920&h=1080&crop=1'}}`
 
-### Fonts in React Native
-Install expo-font and import it as follows: `import * as Font from 'expo-font';`.
+## Fonts in React Native
+In order to use custom fonts, locally or from the web, you need to load them into your app first.
+Install **expo-font** and import it: `import * as Font from 'expo-font';`.
 
-Loading the local fonts you want to use using the following function:
+Using the following async function you can load in your fonts:
 ```
 const loadFonts = () => {
   return Font.loadAsync({
@@ -157,8 +159,8 @@ if (!fontLoaded) {
 }
 ```
 
-### Icons in React Native
-Import icons from expo library: `import { MaterialIcons } from '@expo/vector-icons';`.
+## Icons in React Native
+Import icons from the expo library: `import { MaterialIcons } from '@expo/vector-icons';`.
 
 ---
 

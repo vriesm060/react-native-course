@@ -317,11 +317,13 @@ useEffect(() => {
 
 ---
 
-# Building web server using express and MongoDB
+# Building web server using Express and MongoDB
+For the [Home Listing App][3.0] and the [Authentication System App][4.0] I've made use of custom made APIs. This is done in the backend using Express routing and MongoDB as a database. The APIs are used in the React Native Apps to display data. A nice lesson on combining a React Native frontend and NodeJS backend. This course is all about React Native, so I will not dive too deep into the NodeJS backend. I already have experience working with NodeJS and thus everything here is not new to me. However, in order to know what kind of data I'm working with, I've made a quick overview of the backend.
 
-### Setup MongoDB with schema
+## Setup MongoDB with schema
+The data that will be stored in the MongoDB database is setup using a schema. To create this, I make use of the NPM package **Mongoose**.
 
-**Schema:**
+### Schema
 ```
 const mongoose = require('mongoose');
 
@@ -338,7 +340,9 @@ const HouseSchema = new mongoose.Schema({
 module.exports = mongoose.model('House', HouseSchema);
 ```
 
-**Routing:**
+## Routing
+The routing is done using **Express**. You use a post request to post the data from a form into the database. This creates a new instance of the House schema with the formdata. This data can then be placed in a new database entry.
+
 ```
 const express = require('express');
 const House = require('../models/House');
@@ -369,7 +373,9 @@ router.post('/', (req, res) => {
 module.exports = router;
 ```
 
-**Validation:**
+### Validation
+Before placing the data in the database, the formdata needs to be validated.
+
 ```
 router.post('/', [
   check('title')
@@ -386,11 +392,9 @@ router.post('/', [
 ---
 
 # Combining React Native frontend with NodeJS Backend
+I setup a React Native app for the [Home Listing App][3.0] using the React Native features I've learned in previous sections. Setting it up with a stack and tab navigator.
 
-I setup a React Native app for the home listing App using the React Native features I've learned in previous sections. Setting it up with a stack and tab navigation.
-
-### Connect React Native to the server
-
+## Connect React Native to the server
 Fetch the data from the server in an action and pass this data through the reducer to the components that will take it in.
 
 ```
@@ -408,9 +412,8 @@ export const fetchHouses = () => {
 }
 ```
 
-### Add a form to post data to the server
-
-React Native form is build using Formik.
+## Add a form to post data to the server
+To actually post the data to the NodeJS API, you need to make a form on the React Native frontend. This form is build using the **Formik** package.
 
 ```
 <Formik
@@ -460,11 +463,9 @@ React Native form is build using Formik.
 </Formik>
 ```
 
-### Add validation to form in react native
+## Add validation to form in react native
+Validation is also handled on the frontend, before posting the data to the API. I use **Yup** to validate the React Native form and define a schema for the validation.
 
-We use Yup to validate the React Native form.
-
-Define a schema for the validation.
 ```
 const formSchema = yup.object({
   title: yup.string().required().min(3).max(50),
@@ -476,9 +477,8 @@ const formSchema = yup.object({
 });
 ```
 
-### Add post request to the server
-
-Post the form data to the server using fetch. We do this in the action.
+## Add post request to the server
+Post the formdata to the server using fetch. This is handled in the action.
 
 ```
 export const createHome = ({ title, image, homeType, price, yearBuilt, address, description }) => {

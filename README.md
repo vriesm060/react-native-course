@@ -245,16 +245,12 @@ const HeaderLeft = () => {
 ---
 
 # State management with Redux
+Redux makes it easy to manage the state (data) of an application. With Redux, the state is kept in a central **store**, accessible to every component that needs to use it.
 
-Redux makes it easy to manage the state (data) of an application. With Redux, the state is kept in a central **store**, accessibe to every component that needs to use it.
+## Flow
+A component can trigger an event. This event can be dispatched to a **reducer**, which updates the state in the central Redux **store**. From there the updated states are passed back to the connected components via the **actions**.
 
-**Flow:**
-A component can trigger an event. This event can be dispatched to a reducer, which updates the state in the central Redux store. From there the updated states are passed back to the connected components.
-
-* Action folder
-* Reducer folder
-
-Make use of combineReducers to combine all the reducers in the store.
+Make use of the `combineReducers` function to combine all the reducers in the store.
 
 ```
 const rootReducer = combineReducers({
@@ -264,11 +260,10 @@ const rootReducer = combineReducers({
 
 Create the store using `createStore(rootReducer, middleware)`.
 
-Use the store as a `<Provider></Provider>` component, wrapper the App.
+Use the store as a `<Provider></Provider>` component, wrapping the App.
 
-### Setting up reducers
-
-Reducers are JS functions that take two parameters: state and actions.
+## Setting up reducers
+Reducers are JS functions that take two parameters, state and actions.
 
 ```
 const initialState = {
@@ -281,7 +276,7 @@ export default function (state = initialState, action) {
 }
 ```
 
-### Redux Actions
+## Redux Actions
 Redux Actions are JS objects with **type** and **payload**. The **type** property describes how the state should change. The **payload** property discribes what should change and can be omitted if you don't have new data to save in the store.
 
 You use identifiers to describe the actions that will happen, like so:
@@ -301,13 +296,13 @@ export const fetchArticles = () => {
 }
 ```
 
-You can make HTTP requests and fetch other type of data in the actions part of Redux, so you can use it in the state.
+>You can make HTTP requests and fetch other type of data in the actions part of Redux, so you can use it in the state.
 
-### Use Redux in components
-Using `useSelector` we can select data from the state.
-With useDispatch we can dispatch actions to the reducer.
+## Use Redux in components
+Using `useSelector` you can select data from the state.
+With `useDispatch` you can dispatch actions to the reducer.
 
-Dispatch an action:
+**Dispatch an action:**
 ```
 const dispatch = useDispatch();
 
@@ -316,7 +311,8 @@ useEffect(() => {
 }, [dispatch]);
 ```
 
-And use the data from the store:
+**Use the data from the store:**
+
 `const articles = useSelector(state => state.news.articles);`
 
 ---

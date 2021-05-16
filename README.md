@@ -165,18 +165,23 @@ Import icons from the expo library: `import { MaterialIcons } from '@expo/vector
 ---
 
 # Navigation in React Native
-Use React Navigation package.
+Navigation in React Native is done by using the React Navigation packages. Install the following packages:
 
-Three types of navigation:
+`yarn add @react-navigation/native`
 
-* **Stack navigation**
+`yarn add react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view`
+
+## Three types of navigation
+In React Native there are three different types of navigation.
+
+* **Stack navigation:**  
   Move from one page to the other by stacking screens ontop of each other.
-* **Tabs navigation**
-  Move to different screens as tabs.
-* **Drawer navigation**
-  Create a hamburger menu with drawers.
+* **Tabs navigation:**  
+  Move to different screens as tabs. Tabs are usually placed on the bottom of the screen.
+* **Drawer navigation:**  
+  Create a hamburger menu button which reveals a drawer style menu from the side. Also natively accessible by swiping from the side of the screen.
 
-### Stack Navigator
+## Stack Navigator
 ```
 const Stack = createStackNavigator();
 
@@ -191,22 +196,19 @@ function AppNavigator() {
 }
 ```
 
-Create a stack navigator tree using createStackNavigator function.
+Create a stack navigator tree using the **createStackNavigator** function. Within this tree you can then place the different screens available, like so:
 
 `<Stack.Screen name="NewsList" component={NewsListScreen} />`
 
-Setup a screen as part of a stack navigator.
-Name is relevant for moving between one screen to another.
+Setup a screen as part of a stack navigator. The name is relevant for moving between one screen to another in the navigator and give it a component to render. 
 
-Using React Navigation will give screens a navigation prop, which has methods like goBack and navigate.
+>Using React Navigation will give screens a navigation prop, which has methods like goBack and navigate. Navigate will automatically give the screen a back button. You have the option to turn this off.
 
-Navigate will automatically give a back button.
+You can move between screens within a stack by using the `navigate` method:
 
-**Moving between screens like this:**
 `props.navigation.navigate('NewsDetails')`
 
-### Tabs navigation
-
+## Tabs navigation
 ```
 <Tabs.Navigator>
   <Tabs.Screen name="Home" component={HomeNavigator} />
@@ -214,10 +216,9 @@ Navigate will automatically give a back button.
 </Tabs.Navigator>
 ```
 
-You can use tab navigation to navigate between different stacks, which can contain screens.
+You can use tab navigation to navigate between different stacks, each containing screens.
 
-### Drawer navigation
-
+## Drawer navigation
 ```
 <Drawer.Navigator>
   <Drawer.Screen name="News" component={TabsNavigator} />
@@ -225,10 +226,9 @@ You can use tab navigation to navigate between different stacks, which can conta
 </Drawer.Navigator>
 ```
 
-Creates a drawer coming in by default from the left of the screen when dragging from left to right.
+Creates a drawer coming in by default from the left of the screen when swiping from left to right.
 
-**Add a hamburger menu:**
-
+### Add a hamburger menu
 Import useNavigation component which will give access to the navigation props.
 This way we can create a hamburger menu to open up the drawer.
 

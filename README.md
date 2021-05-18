@@ -513,14 +513,17 @@ This action is passed through the reducer and back to the components.
 
 ---
 
-# Authentication system
+# Authentication system server side
+This section of the course is all about learning to create an authentication system. Working with protected data and storing tokens.
 
-### The setup
-A client (App) sends a request with authentication to the server. In response it gets a token. This token is stored on the client side and gets send to the server on subsequent requests whenever the client wants to make a request to the server. 
+## The setup
+A client, in my case the React Native App, sends a request with authentication to the server. In response it gets a token. This token is stored on the client side and gets send to the server on subsequent requests whenever the client wants to make a request to the server. 
 
-This is the authentication system we will build.
+This is the authentication system I will build.
 
-### Building the user register request
+## Building the user register request
+I start of on the server side, creating the user register request handler.
+
 ```
 router.post('/register', async (req, res) => {
   const user = new User({
@@ -538,23 +541,27 @@ router.post('/register', async (req, res) => {
 });
 ```
 
-We add validation and secure the password in the database by hashing it.
-For the hashing we use the bcryptjs package.
+Because you're dealing with secure data like email and password, it's important to take good care of the data. One important thing to do is to hash the password, so you don't store the actual value in the database.
 
-**Hashing password:**
+To hash the password, I use a package called **bcryptjs**.
+
+### Hashing the password
 ```
-// Hash the password:
 const salt = await bcrypt.genSalt();
 const hashPassword = await bcrypt.hash(req.body.password, salt);
 ```
 
-**Check if email already exists:**
+Besides hashing the password, I'll also check if the email already exists, so there are no duplicates in the database.
+
+### Check if email already exists
 ```
 const userExists = await User.findOne({ email: req.body.email });
 if (userExists) return res.status(400).send('Email already exists.');
 ```
 
-### Building the login request
+## Building the login request
+Next is the login request. Here I get the login credentials that the user entered in the login form. In this request I do the opposite of the register request. Check if the email is correct and exists in the database and use **bcryptjs** to validate the password.
+
 ```
 router.post('/login', loginValidate, async (req, res) => {
   // Validate form:
@@ -573,8 +580,10 @@ router.post('/login', loginValidate, async (req, res) => {
 });
 ```
 
-### Setting up JSON web tokens
-Using the jsonwebtoken package we can create a web token, like:
+## Setting up JSON web tokens
+Last thing to do is to apply a token to the request header. By doing this I can check if the user is logged in on subsequent visits.
+
+Using the **jsonwebtoken** package I can create the web token.
 
 ```
 const token = jwt.sign({ _id: user._id, email: user.email }, secret);
@@ -582,7 +591,7 @@ res.header('auth-token', token).send({ message: 'Logged in successfully!', token
 ```
 
 ### Protecting a route
-To protect a route, we use a middleware to verify the token that we get back from our authentication request.
+To protect a route, I use a middleware to verify the token that I get back from the authentication request.
 
 ```
 module.exports = function (req, res, next) {
@@ -600,14 +609,21 @@ module.exports = function (req, res, next) {
 }
 ```
 
-### React Native frontend for authentication app
-Using the secureTextEntry property for TextInput, we can secure the password input.
+And now the server requests are done. Next up is the authentication on the client side.
 
-### Register a user using React Native and NodeJS
+---
 
-When we fill in a register form with a full name, email and password and submit this, a redux action dispatches the user data we submitted to the NodeJS backend.
+# Authentication system client side
+Now that the authentication is done on the server side and the requests are all handled, it's time to work on the client side. 
 
-**Form submit handler:**
+Here the user can register by entering an email, full name and password and can login using their new credentials.
+
+<!-- Using the **secureTextEntry** property for TextInput, we can secure the password input. -->
+
+## Register a user using React Native and NodeJS
+When a user fills in a registration form with a full name, email and password and submits this, a redux action dispatches the user data to the NodeJS backend.
+
+### Form submit handler
 ```
 onSubmit={(values) => {
   dispatch(authAction.registerUser(values))
@@ -618,11 +634,9 @@ onSubmit={(values) => {
 }}
 ```
 
-On the backend we generate a unique token and send it back to the frontend along with the user details and a success boolean. The user is also saved in the database with an hashed password, for security reasons.
-
 Logging in uses the same approach, only without needing the full name.
 
-**Backend register handler**
+### Backend register handler
 ```
 try {
   const savedUser = await user.save();
@@ -644,11 +658,10 @@ try {
 }
 ```
 
-### Storing tokens using AsyncStorage
+## Storing tokens using AsyncStorage
+When a user has already registered, you can use the generated token to login the existing user. For this to work, you need to store the token in the React Native frontend. I do this using **Async Storage**.
 
-When a user has already registered, we can use the generated token to login the existing user. For this to work, we need to store the token in the React Native frontend. We do this using Async Storage
-
-In the login and register screens, when we submit the form and dispatch the data from the backend, we can store the token using Async Storage. Since this is an async function, we add the `async` keyword before the function that uses the resultData, like:
+In the login and register screens, when submitting the form and dispatching the data from the backend, I can store the token using Async Storage. Since this is an async function, you have to add the `async` keyword before the function that uses the resultData, like:
 
 ```
 dispatch(authAction.loginUser(values))
@@ -667,7 +680,7 @@ dispatch(authAction.loginUser(values))
   .catch(err => console.log(err));
 ```
 
-In the homescreen we can then get the token back from the storage:
+In the homescreen I can then get the token back from the storage:
 ```
 const loadProfile = async () => {
   const token = await AsyncStorage.getItem('token');
@@ -680,25 +693,26 @@ useEffect(() => {
 ```
 
 ### Decoding tokens
-We can decode the user tokens using a package called JWT Decode.
+To decode the user tokens I use a package called **JWT Decode**.
 
 `const decoded = jwtDecode(token);`
 
 ---
 
 # Deploying React Native Apps
+To deploy a React Native App through Expo to either iOS or Android, you'll have to follow these steps.
 
-1. Update the `app.json` file with the right information. Like name, icon, platforms, splashscreen, etc.
+1. Update the `app.json` file with the right information, like **name**, **icon**, **platforms**, **splashscreen**, etc.
 2. Publish the app using the command `expo publish`. This will publish the app to Expo. You need an Expo account for this.
 3. Build the app:
     * **iOS:** Run the command `expo build:ios`
     * **Android:** Run the command `expo build:android`
 
-### For iOS
+## For iOS
 If you want to build an app for iOS, you need a paid Developer account. To build, just run the command `expo build:ios`, and this should take you through the process.
 
-### For Android
-Building an app for Android using the command `expo build:android`, you can specify if you want to build an APK (`expo build:android -t apk`) or an App Bundle file (`expo build:android -t app-bundle`). APKs are generally used for testing internally and externally. If you really want to publish your app in the Google Play Store, build an App Bundle.
+## For Android
+You can build an app for Android using the command `expo build:android`. You can specify if you want to build an APK (`expo build:android -t apk`) or an App Bundle file (`expo build:android -t app-bundle`). APKs are generally used for testing internally and externally. If you really want to publish your app in the Google Play Store, build an App Bundle.
 
 For updating an app, you need to apply a keystore, which you can generate using Expo.
 

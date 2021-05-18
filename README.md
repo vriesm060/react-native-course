@@ -32,7 +32,7 @@
 * **[Styling in React Native](#styling-in-react-native)**
   * [Platform specific styles](#platform-specific-styles)
   * [Images in React Native](#images-in-react-native)
-  * [Fonts in React Native](#font-in-react-native)
+  * [Fonts in React Native](#fonts-in-react-native)
   * [Icons in React Native](#icons-in-react-native)
 * **[Navigation in React Native](#navigation-in-react-native)**
   * [Three types of navigation](#three-types-of-navigation)
@@ -43,14 +43,14 @@
   * [Flow](#flow)
   * [Setting up reducers](#setting-up-reducers)
   * [Redux Actions](#redux-actions)
-  * [Use Redux in Components](#use-redux-in-components)
+  * [Use Redux in components](#use-redux-in-components)
 * **[Building web server using Express and MongoDB](#building-web-server-using-express-and-mongodb)**
   * [Setup MongoDB with schema](#setup-mongodb-with-schema)
   * [Routing](#routing)
 * **[Combining React Native frontend with NodeJS Backend](#combining-react-native-frontend-with-nodejs-backend)**
   * [Connect React Native to the server](#connect-react-native-to-the-server)
   * [Add a form to post data to the server](#add-a-form-to-post-data-to-the-server)
-  * [Add validation to form in react native](#add-validation-to-form-in-react-native)
+  * [Add validation to form in React Native](#add-validation-to-form-in-react-native)
   * [Add post request to the server](#add-post-request-to-the-server)
 * **[Authentication system server side](#authentication-system-server-side)**
   * [The setup](#the-setup)
@@ -465,7 +465,7 @@ To actually post the data to the NodeJS API, you need to make a form on the Reac
 </Formik>
 ```
 
-## Add validation to form in react native
+## Add validation to form in React Native
 Validation is also handled on the frontend, before posting the data to the API. I use **Yup** to validate the React Native form and define a schema for the validation.
 
 ```

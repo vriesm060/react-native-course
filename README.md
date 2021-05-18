@@ -66,7 +66,7 @@
 
 ---
 
-# Setup :floppy_disk:
+# Setup
 In order to run React Native on your computer, you can either use the **React Native CLI** or the **Expo CLI**. For this course I'm using Expo, since it is easier to start out with. The React Native CLI is better for more experienced React Native developers. Both CLIs have pros and cons.
 
 **Differences between Expo CLI and React Native CLI**

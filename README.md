@@ -35,29 +35,31 @@
   * [Fonts in React Native](#font-in-react-native)
   * [Icons in React Native](#icons-in-react-native)
 * **[Navigation in React Native](#navigation-in-react-native)**
+  * [Three types of navigation](#three-types-of-navigation)
+  * [Stack Navigator](#stack-navigator)
   * [Tabs navigation](#tabs-navigation)
   * [Drawer navigation](#drawer-navigation)
 * **[State management with Redux](#state-management-with-redux)**
-  * [Setting up Reducers](#setting-up-reducers)
+  * [Flow](#flow)
+  * [Setting up reducers](#setting-up-reducers)
   * [Redux Actions](#redux-actions)
   * [Use Redux in Components](#use-redux-in-components)
 * **[Building web server using Express and MongoDB](#building-web-server-using-express-and-mongodb)**
   * [Setup MongoDB with schema](#setup-mongodb-with-schema)
-* **[Combining React Native frontend with NodeJS backend](#combining-react-native-frontend-with-nodejs-backend)**
+  * [Routing](#routing)
+* **[Combining React Native frontend with NodeJS Backend](#combining-react-native-frontend-with-nodejs-backend)**
   * [Connect React Native to the server](#connect-react-native-to-the-server)
   * [Add a form to post data to the server](#add-a-form-to-post-data-to-the-server)
-  * [Add validation to form in React Native](#add-validation-to-form-in-react-native)
+  * [Add validation to form in react native](#add-validation-to-form-in-react-native)
   * [Add post request to the server](#add-post-request-to-the-server)
-* **[Authentication system](#authentication-system)**
+* **[Authentication system server side](#authentication-system-server-side)**
   * [The setup](#the-setup)
   * [Building the user register request](#building-the-user-register-request)
   * [Building the login request](#building-the-login-request)
-  * [Setting up JSON Web Tokens](#setting-up-json-web-tokens)
-  * [Protecting a route](#protecting-a-route)
-  * [React Native frontend for Authentication App](#react-native-frontend-for-authentication-app)
+  * [Setting up JSON web tokens](#setting-up-json-web-tokens)
+* **[Authentication system client side](#authentication-system-client-side)**
   * [Register a user using React Native and NodeJS](#register-a-user-using-react-native-and-nodejs)
   * [Storing tokens using AsyncStorage](#storing-tokens-using-asyncstorage)
-  * [Decoding tokens](#decoding-tokens)
 * **[Deploying React Native Apps](#deploying-react-native-apps)**
   * [For iOS](#for-ios)
   * [For Android](#for-android)
